@@ -1,6 +1,7 @@
 
-## PAGAMENTO.LOL
+## STORB.LOL
 **Inicio do projeto**: 26/03/2024
+
 **Data prevista para finalização**: 02/04/2024
   
 # 1. Autenticação e Login:
