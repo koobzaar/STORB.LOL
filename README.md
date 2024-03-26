@@ -69,9 +69,9 @@ O botão de logout apaga as credenciais do usuário dos cookies e atualiza a pá
 A página de login pode atuar apenas como um captador de credenciais, sem necessariamente checar se a conta do usuário existe ou fazer requisições para captar os dados da conta - como o balanço de RP, por exemplo. Nesse caso em específico, a autenticação só será feita quando o usuário for enviar o presente na tela final - que retornará um erro por credenciais incorretas.
 ```json
 {
-	"user": "liberaascameras",
-    "pass": "4laninocente123",
-    "itemID": 382939123923120
+"user": "liberaascameras",
+"pass": "4laninocente123",
+"itemID": 382939123923120
 }
 ```
 > A vantagem disso é que, no final, será necessária apenas UMA requisição ao back-end: o identificador do item a ser comprado, o usuário e a senha.
