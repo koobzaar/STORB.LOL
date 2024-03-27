@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Card from '../components/Card/Card'
+import RiotAPI from '../api/RiotAPI';
 
-//  Página da loja. Apenas disponível depois de passar por login/login.js
+// const  RiotClient = new RiotAPI('x', 'x', 'pt_BR');
+// await RiotClient.authenticate();
+
 export default function Home() {
   return (
     <body>
