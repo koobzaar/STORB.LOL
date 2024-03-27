@@ -1,8 +1,14 @@
 .card {
     display: flex;
     flex-direction: column;
-    width: 17rem;
+    /* 261/16=16.5rem */
+    width: 16rem;
+    /* 387/16=2.79rem */
     height: 24rem;
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 0.9rem;
+}
+
+.image{
+    
 }
