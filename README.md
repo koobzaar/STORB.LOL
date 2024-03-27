@@ -3,7 +3,21 @@
 **Inicio do projeto**: 26/03/2024
 
 **Data prevista para finalização**: 02/04/2024
-  
+
+
+## Instalação e desenvolvimento
+
+Primeiro, instale as dependências do projeto. No terminal, navegue até a pasta do projeto e execute o seguinte comando:
+```bash
+yarn install
+```
+Depois de instalar as dependências, você pode iniciar o servidor de desenvolvimento. Execute o seguinte comando:
+```bash
+yarn run dev
+```
+Agora, abra o navegador e acesse `http://localhost:3000` para ver o aplicativo em execução.
+Lembre-se de que esses comandos devem ser executados no diretório raiz do projeto.
+
 # 1. Autenticação e Login:
 
 ## Página Principal:
