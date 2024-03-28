@@ -2,6 +2,7 @@ import axios from "axios";
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
 import https from 'https';
+import { Cookie } from "next/font/google";
 
 /**
  * Represents an authentication class for Riot API.
@@ -35,10 +36,7 @@ export default class Auth {
             "username": this.username,
         };
         this.cookieJar = new CookieJar();
-        this.client = wrapper(axios.create({jar:this.cookieJar}));
-        this.client.defaults.headers.common['User-Agent'] = 'RiotClient/58.0.0.4640299.4552318 Ithymarlaven (Windows;10;;Professional, x64)';
-        this.client.defaults.headers.common['Accept-Language'] = 'en-US,en;q=0.9';
-        this.client.defaults.headers.common['Accept'] = 'application/json, text/plain, */*';
+        this.client;
         this.access_token = '';
         this.tokenId = '';
         this.httpsAgent = new https.Agent({ rejectUnauthorized: false });
@@ -48,42 +46,65 @@ export default class Auth {
      * Authenticates the client.
      * @returns {Promise} A promise that resolves when the client is authenticated.
      */
-    async authClient(){
-        return await this.client.post(this.authURL, this.clientData);        
+    async _authClient(){
+        let response = await this.client.post(this.authURL, this.clientData).then((response) => {
+            console.log("Success")
+            return response;
+        }).catch((response) => {
+            console.log("Error")
+        });
+        return response;    
     }
 
     /**
      * Authenticates the user.
      * @returns {Promise} A promise that resolves when the user is authenticated.
      */
-    async authUser(){
-       return await this.client.put(this.authURL, this.userData);
+    async _authUser(){
+        let response = await this.client.put(this.authURL, this.userData).then((response) => {
+            console.log("Success")
+            return response;
+        }).catch((response) => {
+            console.log("Error")
+        });
+        return response
     }
 
+    updateHeaders(){
+        this.client.defaults.headers.common['User-Agent'] = 'RiotClient/58.0.0.4640299.4552318 Ithymarlaven (Windows;10;;Professional, x64)';
+        this.client.defaults.headers.common['Accept-Language'] = 'en-US,en;q=0.9';
+        this.client.defaults.headers.common['Accept'] = 'application/json, text/plain, */*';
+    }
     /**
      * Authenticates the client and user.
      * Updates the credentials based on the provided URI.
      * @returns {Promise} A promise that resolves when the authentication is complete.
      */
     async authenticate(){
-        await this.authClient();
-        let userAuthentication = await this.authUser();
-        //TODO - Remover o console.log após a porcaria do 429 sumir e checar se ta tudo ok
-        console.log(userAuthentication.response.parameters.uri)
-        let url = data2['response']['parameters']['uri'];
-        this.updateCredentials(url);        
+        const jar = new CookieJar();
+        this.client = wrapper(axios.create({ jar }));
+        this.updateHeaders();
+        let clientAuth = await this._authClient();
+        let userAuthentication = await this._authUser();
+
+        let url = userAuthentication['data']['response']['parameters']['uri'];
+        console.log(url)
+        this._updateTokens(url); 
+     
+
     }
+
+    
 
     /**
      * Updates the access token and token ID based on the provided URI.
      * @param {URI} uri - The URI containing the access token and token ID.
      */
-    updateTokens(uri){
-        const token = uri.toString().split("access_token");
-        this.access_token = token.toString().split('&')[0].replace('http://localhost/redirect#,=', '');
-        this.tokenId = token.toString().split('&')[2].replace('id_token=', '');
-        console.log(this.access_token);
-        console.log(this.tokenId);
+    _updateTokens(uri){
+        const token = uri.toString().match(/access_token=((?:[a-zA-Z]|\d|\.|-|_)*).*id_token=((?:[a-zA-Z]|\d|\.|-|_)*).*expires_in=(\d*)/);
+        this.access_token = token[1];
+        this.tokenId = token[2]
+
     }
 
     /**

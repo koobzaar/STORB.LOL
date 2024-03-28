@@ -1,3 +1,4 @@
+import axios from "axios";
 import RiotAPI from "./RiotAPI";
 
 export default class Store extends RiotAPI {
@@ -10,17 +11,17 @@ export default class Store extends RiotAPI {
      * @returns {Promise<Object>} The store data.
      */
     async getStore() {
-        return await this.client.get(this.storeURL, {
+        return await axios.get(`https://br.store.leagueoflegends.com/storefront/v3/featured?language=pt_BR`, {
             headers: {
                 'User-Agent': 'RiotClient/18.0.0 (rso-auth)',
                 'Accept': 'application/json',
-                'Authorization': this.getBearerToken()
+                'Authorization': `Bearer ${this.tokenId}`
             }
         }).then((response) => {
-            this.store = response.data;
+            this.store = response;
             return this.store;
         }).catch((response) => {
-            return console.log('Unable to fetch store:'+response.data);
+            return console.log('Unable to fetch store:'+response);
         });
     }
     

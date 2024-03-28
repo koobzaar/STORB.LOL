@@ -41,24 +41,6 @@ export default class RiotAPI extends Auth {
     }
 
     /**
-     * Gets the store data.
-     * @returns {Promise<Object>} The store data.
-     */
-    async getStore() {
-        return await this.client.get(this.storeURL, {
-            headers: {
-                'User-Agent': 'RiotClient/18.0.0 (rso-auth)',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${this.bearerToken}`
-            }
-        }).then((response) => {
-            return response.data;
-        }).catch((response) => {
-            return console.log(response.data);
-        });
-    }
-
-    /**
      * Updates the language used for API requests and updates the corresponding URLs.
      * @param {string} lang - The language code to be set.
      */
