@@ -14,14 +14,14 @@ export default function Home() {
       name={'Bewithing Miss Fortune Prestige Edition'}
       imageURL={'https://cdnb.artstation.com/p/assets/images/images/029/676/297/large/west-studio-weststudio-lol-splash-01.jpg?1598307679'}
       tier={'PRESTIGE'}
-      price={'1820RP'}
+      price={1820}
       
       />
        <Card
-      name={'Bewithing Miss Fortune Prestige Edition'}
+      name={'PROJECT: Naafiri'}
       imageURL={'https://dotesports.com/wp-content/uploads/2024/02/PROJECT_Naafiri.jpg'}
-      tier={'PRESTIGE'}
-      price={'1820RP'}
+      tier={'ULTIMATE'}
+      price={1820}
       
       />
       
