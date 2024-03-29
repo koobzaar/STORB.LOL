@@ -1,0 +1,87 @@
+:root{
+    --left-menu-color: #FBFBFB;
+}
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+     font-family: 'Poppins';
+}
+.left-menu{
+    display: flex;
+    align-items: center;
+    padding-left:1.5%;
+    justify-content: space-around;
+    flex-direction: column ;
+    /* 293 prototype / 1920 view port = 0.1526 => 15.26% of view width*/
+    width: 15.26vw;
+    /* for any retarded that has 3840+ resolution */
+    max-width: 293px;
+    min-width: 220px;
+    margin: none;
+    padding: none;
+    background-color: var(--left-menu-color);
+}
+
+.left-menu .left-menu-header{
+    width: 100%;
+    background: inherit;
+}
+.left-menu .left-menu-content{
+    width: 100%;
+    background-color: inherit;
+}
+.left-menu .left-menu-footer-info {
+    width: 100%;
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    margin: none;
+    padding: none;
+    font-size: 0.5rem;
+}
+
+.left-menu h1 {
+    font-size: 1rem;
+}
+.left-menu .advisory{
+    margin: none;
+    padding: none;
+    font-size: 0.5rem;
+}
+.left-menu .social-media-call{
+    margin: none;
+    padding: none;
+    font-size:1rem;
+}
+.left-menu .menu-item{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.left.menu .menu-option-label{
+    transition: 0.5s;
+}
+.left-menu .menu-item .menu-option-label{
+    transition: 0.5s;
+}
+.left-menu .menu-item .left-menu-navigation-icon{
+    transition: 0.5s;
+}
+.left-menu .menu-item:hover .menu-option-label{
+    opacity: 0;
+}
+.left-menu .menu-item:hover .left-menu-navigation-icon{
+    transform: translateX(100px) scale(1.5)
+    
+    
+}
+
+.left-menu .menu-option-label{
+    margin-left: 10px;
+}
+
