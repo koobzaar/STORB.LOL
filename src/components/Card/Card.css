@@ -1,3 +1,14 @@
+:root{
+    --button-color:#DA2C38; 
+    --button-text-color: #FBFBFB;
+    --text-color: #1B1B1C;
+}
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+     font-family: 'Poppins';
+}
 .card {
     display: flex;
     flex-direction: column;
@@ -9,6 +20,151 @@
     border-radius: 0.9rem;
 }
 
-.image{
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 25%;
+    min-height: 25%;
+    padding-left: 20px;
+    margin: 0px;
+}
+.item-info{
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    height: 50%;
+    min-height: 50%;
+    width: 100%;
+    min-width: 100%;
+}
+.item-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    min-width: 50%;
+    min-height: 100%;
+}
+
+.item-tier{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 10px;
+}
+
+.item-tier::first-letter {
+    text-transform: lowercase !important;
+}
+.card-content h1, .card-content p {
+    font-size: 10px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.item-price-and-send{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px;
+}
+
+.item-price{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-gift-button{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    width: 50%;
+    height: 100%;
+    padding-right: 10px;
+}
+
+
+
+.image-placeholder{
+    width: 100%;
+    /* consumes 325px of 436 total, that means 326/436 = 0.747 => 75% */
+    height: 75%;
+    min-height: 75%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.image-container{
     
+    position: relative;
+    width: inherit;
+    height: 100%;
+}
+.item-image {
+    border-radius: 0.9rem 0.9rem 0px 0px;
+    position: relative;
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+    z-index: 1;
+}
+
+
+.wave-container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+}
+.translucid-wave{
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: 3;
+}
+.solid-wave{
+    bottom: 0;
+    position: absolute;
+    height: auto;
+    width: 100%;
+    z-index: 4;
+}
+
+.send-gift-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.8rem;
+    border-style: none;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    font-weight: bold;
+    font-size:0.55rem;
+    width: 83px;
+    height: 26px;
+
+}
+.gift-icon{
+    width: 7.6px;
+    height: 7px;
+    margin-right: 5px;
+    fill: #FBFBFB;
+    color: #FBFBFB;
+}
+.rp-icon{
+    align-self: center;
+    margin-right: 3px;
+    padding-top: 3px;
+    width: 10px;
+    height: 10px;
 }
