@@ -1,22 +1,15 @@
-:root{
-    --button-color:#DA2C38; 
-    --button-hover-color: rgb(243, 96, 96);
-    --button-text-color: #FBFBFB;
-    --text-color: #1B1B1C;
-}
-* { 
+
+.card {
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
      box-sizing: border-box; 
      font-family: 'Poppins';
-}
-.card {
     display: flex;
     flex-direction: column;
     /* 261/16=16.5rem */
-    width: 16rem;
+    width: 100%;
     /* 387/16=2.79rem */
-    height: 24rem;
+    height: 100%;
     background-color: white;
     border-radius: 0.9rem;
 }
@@ -38,6 +31,7 @@
     min-height: 50%;
     width: 100%;
     min-width: 100%;
+    border-radius: 0.9rem;
 }
 .item-name{
     display: flex;
@@ -136,61 +130,6 @@
     z-index: 4;
 }
 
-.send-gift-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.8rem;
-    border-style: none;
-    background-color: var(--button-color);
-    color: var(--button-text-color);
-    font-weight: bold;
-    font-size:0.55rem;
-    width: 83px;
-    height: 26px;
-    transition: 0.5s;
-
-}
-.send-gift-button:hover 
-{
-    background-color: var(--button-hover-color);
-    /* change cursoe */
-    cursor: pointer;
-
-}
-.item-gift-button-text{
-    transition: opacity 0.5s;
-}
-.send-gift-button:hover .item-gift-button-text{
-    opacity: 0;
-}
-
-
-.gift-icon{
-    width: 7.6px;
-    height: 7px;
-    margin-right: 5px;
-    fill: #FBFBFB;
-    color: #FBFBFB;
-    transition: 0.5s;
-}
-
-.send-gift-button:hover .gift-icon{
-    transform: translateX(19px) scale(1.5)
-}
-
-.send-gift-button:active {
-    opacity: 0.5;
-    transition: 0.1s;
-}
-
-.rp-icon{
-    align-self: center;
-    margin-right: 3px;
-    padding-top: 3px;
-    width: 10px;
-    height: 10px;
-}
 
 .svg-tier{
     margin-right: 3px;

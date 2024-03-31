@@ -1,7 +1,21 @@
 :root {
+    /* TODO: Alterar as cores descendentes da primária para a primeira em todos os arquivos de css. */
+    --primary-color: #FBFBFB;
     --background-color:#1a1a1a;
+    --text-color:#1B1B1C;
+    --button-text-color: #FBFBFB;
+    --button-color:#DA2C38; 
+    --button-hover-color: rgb(243, 96, 96);
+    --left-menu-color: #FBFBFB;
+    --input-background-color: rgb(240, 240, 240);
+    --input-active-background-color: rgb(231, 231, 231);
 }
-
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+     font-family: 'Poppins';
+}
 body{
     background-color: var(--background-color);
     font-family: 'Roboto', sans-serif;

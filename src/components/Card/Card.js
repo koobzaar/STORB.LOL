@@ -8,7 +8,7 @@ import giftIcon from '../../../public/icons/gift.svg'
 import riotPoints from '../../../public/icons/rp.svg'
 import circle from '../../../public/icons/circle.svg'
 import { getFillColor, capitalizeFirstLetter } from './utils';
-
+import Button from '../Button/Button'
 
 Card.propTypes = {
     id: PropTypes.string.isRequired,
@@ -26,8 +26,9 @@ Card.propTypes = {
  * @param {string} props.imageURL - URL da imagem do item
  * @param {number} props.price - Preço do item em Riot Points
  * @param {string: "ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON"} props.tier - Tier do item. Se não houver tier - Hextec e etc - espera-se receber o valor "COMMMON".
+ * @param {boolean} props.showButton - Se o botão de enviar presente deve ser exibido. Por padrão, é exibido.
  */
-export default function Card({ id, name, imageURL, price, tier }) {
+export default function Card({ id, name, imageURL, price, tier, showButton = true }) {
     return (
         <div className="card" id={id}>
             <div className='image-placeholder'>
@@ -63,12 +64,9 @@ export default function Card({ id, name, imageURL, price, tier }) {
                             {price}
                         </p>
                     </div>
-                    <div className='item-gift-button'>
-                        <button className='send-gift-button' >
-                            <Image src={giftIcon} className="gift-icon" alt='gift' width={10} height={10}/>
-                            <span className='item-gift-button-text'>Send gift</span>
-                        </button>
-                    </div>
+                    {
+                        showButton && <Button icon={giftIcon} text='Send gift'/>
+                    }
                 </div>
             </div>
         </div>
