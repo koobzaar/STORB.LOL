@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
@@ -11,7 +12,7 @@ import { getFillColor, capitalizeFirstLetter } from './utils';
 import Button from '../Button/Button'
 
 Card.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     imageURL: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
@@ -28,7 +29,7 @@ Card.propTypes = {
  * @param {string: "ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON"} props.tier - Tier do item. Se não houver tier - Hextec e etc - espera-se receber o valor "COMMMON".
  * @param {boolean} props.showButton - Se o botão de enviar presente deve ser exibido. Por padrão, é exibido.
  */
-export default function Card({ id, name, imageURL, price, tier, showButton = true }) {
+export default function Card({ id, name, imageURL, price, tier, showButton = true , onButtonClick}) {
     return (
         <div className="card" id={id}>
             <div className='image-placeholder'>
@@ -65,7 +66,12 @@ export default function Card({ id, name, imageURL, price, tier, showButton = tru
                         </p>
                     </div>
                     {
-                        showButton && <Button icon={giftIcon} text='Send gift'/>
+                        showButton && (
+                            <div className='card-button-container'>
+                                <Button onButtonClick={onButtonClick} icon={giftIcon} text='Send gift'/>
+                            </div>
+                        )
+
                     }
                 </div>
             </div>

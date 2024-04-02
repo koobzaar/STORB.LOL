@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import './Gifting.css'
 import PropTypes from 'prop-types';

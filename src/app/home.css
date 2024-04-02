@@ -18,11 +18,248 @@
      font-family: 'Poppins';
 }
 body{
-    background-color: var(--background-color);
+    background-color: var(--primary-color);
     font-family: 'Roboto', sans-serif;
+    
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+}
+
+.background-body{
+    position: absolute;
+    overflow: hidden;
+    z-index:0;
+    display: flex;
     width: 100%;
-    height:100%;
+    height: 100%;
+}
+.pyke-background{
+    width: 45%;
+
+    height: 100%;
+}
+.pyke-image{
+    width: 100%;
+    height: 100%;
+}
+.home-body{
+    display: flex;
+    flex-direction: column;
+
+    width: 55%;
+    height: 100%;
+}
+
+.home-body .home-user-rating-box{
+    width: 100%;
+    height: 40%;
+    display: flex;
+
+}
+.home-body .home-user-rating-box .home-user-rating-container{
+    width: 60%;
+    height: 100%;
+}
+.home-body .home-user-rating-identification .home-user-rating-identification-image{
+margin-right: 20px;    
+}
+.home-body .home-user-rating-identification .home-user-rating-identification-text p {
+    font-size: 0.7rem;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.home-user-rating-text{
+    font-size: 1rem;
+    font-style: italic;
+    padding: 0;
+    margin: 0;
+}
+.home-body .home-user-rating-identification .home-user-rating-identification-text .home-user-rating-who{
+    font-weight: 700;
+}
+.home-body .home-user-rating-identification{
+    align-items: center; 
+    width: 100%;
+    display: flex;
+}
+/* <div className='home-shortcuts-category-box'>
+                <div className='home-shortcuts-category-skins'>
+                </div>
+                <div className='home-shortcuts-category-champions'>
+                </div>
+                <div className='home-shortcuts-category-hextec'>
+                </div>
+                <div className='home-shortcuts-category-bundles'>
+                </div>
+              </div> */
+.home-shortcuts-category{
+    width: 100%;
+    height: 60%;
+    padding: 0;
+    margin: 0;
+}
+.home-shortcuts-category-title{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 10%;
+}
+.home-shortcuts-category-title h1{
+    font-size: 2rem;
+    padding: 0;
+    margin: 0;
+}
+.home-shortcuts-category-box{
+    width: 100%;
+    height: 90%;
+    margin-left: -100px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+.home-shortcuts-category-box .home-shortcuts-category-skins{
+    width: 31%;
+    height: 50%;
+}
+.home-shortcuts-category-box .home-shortcuts-category-champions{
+    width: 28%;
+    height: 95.5%;
+}
+.home-shortcuts-category-box .home-shortcuts-category-row{
+    display: flex;
+    flex-direction: column;
+}
+.home-shortcuts-category-box .home-shortcuts-category-row .home-shortcuts-category-hextec, .home-shortcuts-category-row .home-shortcuts-category-bundles{
+    width: 279px;
+    height: 205px;
+}
+.home-shortcuts-category-row .home-shortcuts-category-bundles{
+    margin-top: 10%;
+}
+/*  <div className='home-shortcuts-category-skins'>
+                  <h1>Skins</h1>
+                </div>
+                <div className='home-shortcuts-category-champions'>
+                  <h1>Champions</h1>
+                </div>
+                <div className='home-shortcuts-category-row'>
+                <div className='home-shortcuts-category-hextec'>
+                  <h1>Hextec</h1>
+                </div>
+                <div className='home-shortcuts-category-bundles'>
+                  <h1>Bundles</h1>
+                </div> */
+
+.home-shortcuts-category-box .home-shortcuts-category-skins, .home-shortcuts-category-champions, .home-shortcuts-category-hextec, .home-shortcuts-category-bundles{
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+.home-shortcuts-category-background-image-container{
+    border-radius: inherit;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+}
+.home-shortcuts-category-background-image {
+    border-radius: inherit;
+    object-fit: cover;
+    z-index: 1;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+.home-shortcuts-category-box h1{
+    z-index: 3;
+    position: absolute;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    padding: 0;
+    margin: 0;
+
+    bottom: 20px;
+    left: 20px;
+}
+.home-shortcuts-category-background-image-gradient{
+    border-radius: inherit;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(34, 34, 34, 0.329) 0%, rgba(0,212,255,0) 100%);
+    z-index: 2;
+}
+.home-shortcuts-category-card {
+    transition: 0.3s;
+}
+.home-shortcuts-category-card:hover{
+    opacity: 0.8;
+
+}
+
+
+
+
+
+.store-body{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    z-index: 4;
+}
+.store-left-menu{
+    width: 15%;
+    padding-left: 10px;
+    height: 97%;
+}
+.store-separator{
+    width: 2%;
+    height: 100%;
+}
+.store-content{
+    /* TODO: Change the opacity. Maybe there's no need for it not be rendered. Maybe it CAN be rendered, instead, it just change the opacity */
+    opacity: 0;
+    padding: 10px;
+    width: 83%;
+    height: 97%;
+    background: var(--primary-color);
+    border-radius: 1rem;
+}
+
+.store-content-header h1{
+    margin: 0;
+    padding: 0;
+}
+.store-content-header{
+    width: 100%;
+    height: 10%;
+}
+.store-content-items{
+    overflow-x: hidden;
+    display: flex;
+    flex-wrap:wrap;
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+}
+.store-content-items-card{
+    flex: 1 0 calc(261px - 10px); 
+    height: 436px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
