@@ -112,11 +112,8 @@ export default function Home() {
     
 
     // TODO: Mexer na responsividade da home e fazer com que a opacidade do card da loja seja 1 quando o usuário clicar em qualquer item do menu ou dos cards da background
-    // TODO: Pop-up de sucesso e confirmação de compra. Como fazer pop-up de um componente?
     // TODO: Uma logo
     // TODO: Fazer os icones do menu lateral e do login redirecionarem para algo. Qual o discord? :P
-    const showCheckout = (item) => {
-    }
     return (
         <body>
             <div className='background-body'>
