@@ -167,6 +167,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/font@npm:^14.1.4":
+  version: 14.1.4
+  resolution: "@next/font@npm:14.1.4"
+  peerDependencies:
+    next: "*"
+  checksum: 10c0/b6479dbf176e8102e228350d3f28546be1fe3305cc6bf14a8660e2c6cf84ef0044cd5afa3e7c1fac2f85362fb6d705459aef4768c3034d101deb2391a8843c9d
+  languageName: node
+  linkType: hard
+
 "@next/swc-darwin-arm64@npm:14.1.4":
   version: 14.1.4
   resolution: "@next/swc-darwin-arm64@npm:14.1.4"
@@ -3104,6 +3113,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pagamento.lol@workspace:."
   dependencies:
+    "@next/font": "npm:^14.1.4"
     autoprefixer: "npm:^10.0.1"
     axios: "npm:^1.6.8"
     axios-cookiejar-support: "npm:^5.0.0"

@@ -75,7 +75,7 @@ export default function LoginPage() {
                 </div>
                 <div className="champion-background-container">
                     {/* TODO: Add the floating squares */}
-                    <Image src={ireliaBackground} className="irelia-image" alt="background" />
+                    <Image src={ireliaBackground} width={3000} className="irelia-image" alt="background" />
                 </div>
             </div>
         </body>
