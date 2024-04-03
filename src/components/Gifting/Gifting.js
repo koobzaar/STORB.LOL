@@ -11,6 +11,7 @@ import closeIcon from '../../../public/icons/close.svg';
 import Alert from '../Alert/Alert'
 import GiftSender from '../../middlewares/Gift';
 import { useCookies } from 'react-cookie';
+import { CSSTransition } from 'react-transition-group';
 
 Gifting.propTypes = {
     id: PropTypes.string.isRequired,
@@ -150,16 +151,26 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
                 </div>
             </div>
         </div>
-        {
-            showAlert&&
+        <CSSTransition
+            in={showAlert}
+            timeout={300}
+            classNames="alert"
+            unmountOnExit
+        >
+        {state=>(   
+            <div>
+                {showAlert &&
             <Alert
                 title={alert.title}
                 message={alert.message}
                 type={alert.type}
                 hideAlertFunction={()=>{setShowAlert(false)}}
             />
+                }
+            </div>        
+        )
         }
-        
+        </CSSTransition>
       </div>
     )
 }

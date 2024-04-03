@@ -6,7 +6,7 @@ import menuItems from "./menuItems";
 import twitterLogo from "../../../public/icons/twitter.svg";
 import discordLogo from "../../../public/icons/discord.svg";
 import logoutIcon from "../../../public/icons/logout.svg";
-
+import logo from '../../../public/images/logo.png'
 
 import "./LeftMenu.css";
 
@@ -15,10 +15,11 @@ export default function LeftMenu({changeStore, availableCategories, logoutFuncti
     
         <div className="left-menu">
             <div className="left-menu-header">
+                <Image src={logo} className="storb-logo" alt="Storb.lol Logo" width={500}/>
             </div>
             <div className="left-menu-content">
             {availableCategories.map((item, index) => (
-                    <div className="menu-item" key={index} id={item.backendType} onClick={()=>changeStore(item.backendType)}>
+                    <div className="menu-item" key={index} id={item.backendType} onClick={()=>{ changeStore(item.backendType)}}>
                         <Image src={item.icon} className="left-menu-navigation-icon" alt={`${item.name} Icon`} width={20} height={20} />
                         <h1 className="menu-option-label">{item.name}</h1>
                     </div>

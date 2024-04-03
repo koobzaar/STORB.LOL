@@ -5,6 +5,7 @@
     border-radius: 0.9rem;
     /* TODO: check de view port and scaling for different resolutions */
     width: 300px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,10 +22,10 @@
 }
 .alert-box-image-container
 {
-    
+    margin-top: 40px;
     border-radius: inherit;
-    width: 50%;
-    height: 50%;
+    width: 150px;
+    height: 150px;
     position: relative;
 }
 .alert-box-image{

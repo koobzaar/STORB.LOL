@@ -15,6 +15,8 @@ import { useCookies } from 'react-cookie';
 
 
 
+
+
 /**
  * Renders the login page component.
  * @returns {JSX.Element} The login page component.
@@ -26,13 +28,15 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
 
     const handleLogin = (event) => {
+        event.preventDefault();
         if(username === '' || password === '') {
             alert('Please fill in all fields.');
-            event.preventDefault();
+            
             return;
         }
         setCookie('user', username, { path: '/' });
         setCookie('pass', password, { path: '/' });
+        router.push('/');
     }
     useEffect(() => {
         if (cookies.user && cookies.pass) {
@@ -75,6 +79,18 @@ export default function LoginPage() {
                 </div>
                 <div className="champion-background-container">
                     {/* TODO: Add the floating squares */}
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
                     <Image src={ireliaBackground} width={3000} className="irelia-image" alt="background" />
                 </div>
             </div>
