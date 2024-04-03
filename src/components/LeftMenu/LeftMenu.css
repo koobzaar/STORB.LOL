@@ -57,6 +57,9 @@
     transition: 0.5s;
     cursor: pointer;
 }
+.left-menu .menu-item:hover{
+    opacity: 0.5;
+}
 .left.menu .menu-option-label{
     transition: 0.5s;
 }

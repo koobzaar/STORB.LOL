@@ -30,6 +30,9 @@ Card.propTypes = {
  * @param {boolean} props.showButton - Se o botão de enviar presente deve ser exibido. Por padrão, é exibido.
  */
 export default function Card({ id, name, imageURL, price, tier, showButton = true , onButtonClick}) {
+    const handleButtonClick = () => {
+        onButtonClick(id, name, imageURL, price, tier);
+    };
     return (
         <div className="card" id={id}>
             <div className='image-placeholder'>
@@ -68,7 +71,7 @@ export default function Card({ id, name, imageURL, price, tier, showButton = tru
                     {
                         showButton && (
                             <div className='card-button-container'>
-                                <Button onButtonClick={onButtonClick} icon={giftIcon} text='Send gift'/>
+                                <Button onButtonClick={handleButtonClick} icon={giftIcon} text='Send gift'/>
                             </div>
                         )
 

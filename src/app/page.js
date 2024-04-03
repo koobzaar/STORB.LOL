@@ -1,57 +1,122 @@
 'use client'
-import { redirect } from 'next/navigation'
-
+// External imports
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { FixedSizeGrid as Grid } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import Image from 'next/image';
 
+import Store from '../middlewares/Store';
 import LeftMenu from '../components/LeftMenu/LeftMenu';
 import Gifting from '../components/Gifting/Gifting';
 import Card from '../components/Card/Card';
-import Image from 'next/image';
 import pykeImage from '../../public/images/pyke.png';
+import placeHolderUser from '../../public/images/user-placeholder.png';
+import riotPointsIcon from '../../public/icons/rp.svg';
+import starIcon from '../../public/icons/star.svg';
+import skinsPlaceholder from '../../public/images/naafiri.jpg';
+import championsPlaceholder from '../../public/images/kindred.jpg';
+import hextecPlaceholder from '../../public/images/kassadin-hextec.jpg';
+import bundlesPlaceholder from '../../public/images/bundle.jpg';
+
+// Styles
 import './home.css';
-import placeHolderUser from '../../public/images/user-placeholder.png'
-import starIcon from '../../public/icons/star.svg'
-import skinsPlaceholder from '../../public/images/naafiri.jpg'
-import championsPlaceholder from '../../public/images/kindred.jpg'
-import hextecPlaceholder from '../../public/images/kassadin-hextec.jpg'
-import bundlesPlaceholder from '../../public/images/bundle.jpg'
 
-import { useEffect, useState } from 'react';
-import Store from '../middlewares/Store';
-
+// Constants
 const user = {
     name: 'Zerrinha Piroca de Mel',
     rating: 5,
     date: '2 days ago',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi. Euismod in pellentesque massa placerat. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Sit amet aliquam id diam maecenas. Sed felis eget velit aliquet sagittis id.'
 }
+
 const Loja = new Store();
 
 export default function Home() {
-    // TODO: Mexer na responsividade da home e fazer com que a opacidade do card da loja seja 1 quando o usuário clicar em qualquer item do menu ou dos cards da background
-    // TODO: Fazer com que o card da loja seja renderizado de acordo com o item clicado - talvez enviando uma função que altera a prop da loja para cada item do menu retornar a categoria especifica
-    // TODO: Header da loja. Deve retornar do prop da loja qual categoria a propria loja está retornando. O input de pesquisa deve ser uma função getter da classe da loja que filtra baseada no parametro
-    // TODO: Pop-up de sucesso e confirmação de compra. Como fazer pop-up de um componente?
-    // TODO: Redirecionar o usuário para ./login caso a home não detecte user:pass nos cookies. Criptografar a pass?
-    // TODO: Uma logo
-    // TODO: Animar o menu lateral
-    // TODO: Fazer os icones do menu lateral e do login redirecionarem para algo. Qual o discord? :P
-    // TODO: Scroll um pouco mais smooth para os itens da loja
-    // TODO: Skeletons para os itens da loja?? Tem como??
-    // TODO: Logout apaga os cookies
-    // Itens do menu lateral que não tiverem ainda suporte (hextec, icon, ou qualquer outra coisa) retornarão qualquer catalog em caso de não resposta do back-end. No entanto, enviarão o tipo do item para o middleware - que deve ser recebido do back-end
+    
     const [items, setItems] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [numColumns, setNumColumns] = useState(5);
+    const [showGifting, setShowGifting] = useState(false);
+    const [selectedItem, setSelectedItem] = useState({});
+    const [userRiotPoints, setUserRiotPoints] = useState(0);
+
+    const [cookies, addCookies, removeCookies] = useCookies(['user', 'pass']);
+    const router = useRouter();
+   
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    }
 
     useEffect(() => {
-        async function getItems() {
-            const items = await Loja.getCatalogByType('BUNDLES');
-            setItems(items);
-        }
-        getItems();
-    });
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const columnWidth = 320;
+            const newNumColumns = Math.floor(width / columnWidth);
+            setNumColumns(newNumColumns);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []); 
 
-   
+    const filteredItems = items.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     
+    const toggleGifting = (id, name, imageURL, price, tier) => {
+        setSelectedItem({id, name, imageURL, price, tier});
+        setShowGifting(!showGifting);
+    }
+
+    const Cell = ({ columnIndex, rowIndex, style }) => {
+        const item = filteredItems[rowIndex * numColumns + columnIndex];
+        return item ? (
+            <div style={style} key={item.id} className='store-content-items-card'>
+                <Card id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
+            </div>
+        ) : null;
+    };
+
+    const numRows = Math.ceil(filteredItems.length / numColumns);
+
+    const getItems = async (type) => {
+        const items = await Loja.getCatalogByType(type);
+        setItems(items);
+    }
+    const getAmountOfRP = async () => {
+        const rp = await Loja.getRiotPoints();
+        setUserRiotPoints(rp);
+    }
+
+    const logout = () => {
+        removeCookies('user');
+        removeCookies('pass');
+        router.push('/login');
+    }
+
+    useEffect(() => {
+        const fetchItems = async () => {
+            if (!cookies.user || !cookies.pass) {
+                router.push('/login');
+            }
+            await Loja.fetchCatalog();
+            await Loja.fetchRiotPoints();
+            await getItems('CHAMPION');
+            await getAmountOfRP();
+        };
+    
+        fetchItems();
+    }, []);
+    
+
+    // TODO: Mexer na responsividade da home e fazer com que a opacidade do card da loja seja 1 quando o usuário clicar em qualquer item do menu ou dos cards da background
+    // TODO: Pop-up de sucesso e confirmação de compra. Como fazer pop-up de um componente?
+    // TODO: Uma logo
+    // TODO: Fazer os icones do menu lateral e do login redirecionarem para algo. Qual o discord? :P
+    const showCheckout = (item) => {
+    }
     return (
         <body>
             <div className='background-body'>
@@ -126,25 +191,51 @@ export default function Home() {
             </div>
             <div className='store-body'>
                 <div className='store-left-menu'>
-                    <LeftMenu />
+                    <LeftMenu changeStore={getItems} availableCategories={Loja.getAvailablesCategories()} logoutFunction={logout}/>
                 </div>
-                <div className='store-separator'></div>
+                <div className='separator'></div>
                 <div className='store-content'>
-                    {/* <div className='store-content-header'>
-                        <h1>Featured</h1>
+                    <div className='store-content-header'>
+                        <Image src={Loja.currentIcon} width={30} alt={Loja.currentCategory}/>
+                        <h1>{Loja.currentCategory}</h1>
+                        <div className='items-search-bar'>
+                            <input type='text'  placeholder='Wanna search of anything in specific?' onChange={handleSearchChange} />
+                        </div>
+                        <div className='store-content-header-riot-points'>
+                            <Image src={riotPointsIcon} width={20} alt='Riot Points icon'/>
+                            <p>{userRiotPoints}</p>
+                        </div>
                     </div>
                     <div className='store-content-items'>
-                        
-                            {items.map((item, index) => (
-                                <div className='store-content-items-card'>
-                                <Card key={index} id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} tier={item.tier} showButton={true}/>
-                                </div>
-                            ))}
-                       
-                        
-                    </div> */}
+                        <AutoSizer>
+                            {({height, width}) => (
+                                <Grid
+                                    columnCount={numColumns}
+                                    columnWidth={260} 
+                                    height={height} 
+                                    rowCount={numRows}
+                                    rowHeight={410} 
+                                    width={width} 
+                                >
+                                    {Cell}
+                                </Grid>
+                            )}
+                        </AutoSizer>
+                    </div>
                 </div>
             </div>
+                {showGifting && <Gifting 
+                    id={selectedItem.id} 
+                    name={selectedItem.name} 
+                    imageURL={selectedItem.imageURL} 
+                    price={selectedItem.price} 
+                    tier={selectedItem.tier} 
+                    currentRiotPoints={userRiotPoints}
+                    username={cookies.user}
+                    password={cookies.pass}
+                hideGifting={toggleGifting}/>
+                }
+                
         </body>
     );
 }

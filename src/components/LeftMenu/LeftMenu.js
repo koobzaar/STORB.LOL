@@ -5,22 +5,28 @@ import menuItems from "./menuItems";
 
 import twitterLogo from "../../../public/icons/twitter.svg";
 import discordLogo from "../../../public/icons/discord.svg";
+import logoutIcon from "../../../public/icons/logout.svg";
+
 
 import "./LeftMenu.css";
 
-export default function LeftMenu() {
+export default function LeftMenu({changeStore, availableCategories, logoutFunction}) {
     return (
     
         <div className="left-menu">
             <div className="left-menu-header">
             </div>
             <div className="left-menu-content">
-            {menuItems.map((item, index) => (
-                    <div className="menu-item" key={index} id={item.name}>
+            {availableCategories.map((item, index) => (
+                    <div className="menu-item" key={index} id={item.backendType} onClick={()=>changeStore(item.backendType)}>
                         <Image src={item.icon} className="left-menu-navigation-icon" alt={`${item.name} Icon`} width={20} height={20} />
                         <h1 className="menu-option-label">{item.name}</h1>
                     </div>
                 ))}
+            <div className="menu-item"  id="logout" onClick={()=>logoutFunction()}>
+                <Image src={logoutIcon} className="left-menu-navigation-icon" alt={`Logout Icon`} width={20} height={20} />
+                <h1 className="menu-option-label">Logout</h1>
+            </div>
             </div>
             <div className="left-menu-footer-info">
                 <div >

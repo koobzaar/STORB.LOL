@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, {useState} from 'react'
 import './Gifting.css'
 import PropTypes from 'prop-types';
 import Card from '../Card/Card';
@@ -8,6 +8,10 @@ import giftIcon from '../../../public/icons/gift.svg';
 import RPIcon from '../../../public/icons/rp.svg';
 import Image from 'next/image'; 
 import closeIcon from '../../../public/icons/close.svg';
+import Alert from '../Alert/Alert'
+import GiftSender from '../../middlewares/Gift';
+import { useCookies } from 'react-cookie';
+
 Gifting.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -17,7 +21,60 @@ Gifting.propTypes = {
     currentRiotPoints: PropTypes.bool
 };
 
-export default function Gifting ({id, name, imageURL, price, tier, currentRiotPoints}) {
+/**
+ * Renders the Gifting component.
+ * @param {Object} props - The component props.
+ * @param {string} props.id - The ID of the gift.
+ * @param {string} props.name - The name of the gift.
+ * @param {string} props.imageURL - The URL of the gift image.
+ * @param {number} props.price - The price of the gift.
+ * @param {string} props.tier - The tier of the gift.
+ * @param {number} props.currentRiotPoints - The current Riot Points balance.
+ * @param {function} props.hideGifting - The function to hide the gifting component.
+ * @returns {JSX.Element} The rendered Gifting component.
+ */
+export default function Gifting ({id, name, imageURL, price, tier, currentRiotPoints, hideGifting}) {
+    const [cookies] = useCookies(['user', 'pass']);
+    const SendGift = new GiftSender(cookies.user, cookies.pass);
+    const [alert, setAlert] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+
+    /**
+     * Sets the gift parameters and sends the gift.
+     */
+    const setGiftParameters = () => {
+        const receiverInput = document.querySelector('.gifting-card-user-info input');
+        const receiver = receiverInput.value;
+        receiverInput.value = '';
+
+        // Validation for receiver
+        if (!receiver) {
+            setAlert({ title: 'Error!', message: 'You forgot to add a receiver.', type: 'error' });
+            setShowAlert(true);
+            return;
+        }
+        if (!receiver.includes('#')) {
+            setAlert({ title: 'Error!', message: 'You forgot to add the tag of the receiver', type: 'error' });
+            setShowAlert(true);
+            return;
+        }
+
+        const messageInput = document.querySelector('.gifting-card-user-info textarea');
+        const message = messageInput.value;
+        messageInput.value = '';
+
+        // Validation for message
+        if (!message) {
+            setAlert({ title: 'Error!', message: 'A message is required', type: 'error' });
+            setShowAlert(true);
+            return;
+        }
+        SendGift.setGiftParameters(id, message, receiver);
+        SendGift.sendGift();
+        setAlert({ title: 'Success!', message: 'Your gift was sent', type: 'success' });
+        setShowAlert(true);
+    }
+
     return (
       <div className='gifting-card'>
         <div className='gifting-card-parameters'>
@@ -27,9 +84,9 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
             <div className='gifting-card-user'>
                 <div className='gifting-card-user-info'>
                     <label>
-                        Who you want to gift to?
+                        Who do you want to gift to?
                     </label>
-                    <input className='gifting-send-message-input' placeholder='Summoner name'/>
+                    <input className='gifting-send-message-input' placeholder='Summoner#TAG'/>
                     
                 </div>
                 <div className='gifting-card-user-info'>
@@ -45,13 +102,13 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
         <div className='gifting-card-item-card'>
             <div className='gifting-card-item-header'>
                 <p>Checkout details</p>
-                <button className='gifting-card-close-button'>
+                <button className='gifting-card-close-button' onClick={()=>{hideGifting();}}>
                     <Image  src={closeIcon} alt='Gift icon' width={10} height={10}/>
                 </button>
             </div>
             <div className='gifting-card-item'>
                 <div className='card-container'>
-                    <Card c id={id} name={name} imageURL={imageURL} price={price} tier={tier} showButton={false}/>
+                    <Card id={id} name={name} imageURL={imageURL} price={price} tier={tier} showButton={false}/>
                 </div>
                 <div className='gifting-card-balance'>
                     <label>
@@ -85,14 +142,23 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
             </div>
             <div className='gift-card-user-decision'>
                 
-                <span className='gift-card-maybe-letter'>
+                <span className='gift-card-maybe-letter' onClick={()=>{hideGifting();}}>
                     Maybe later...
                 </span>
                 <div className='gift-card-button-container'>
-                <Button icon={giftIcon} text='Send gift'/>  
+                <Button icon={giftIcon} onButtonClick={setGiftParameters} text='Send gift'/>  
                 </div>
             </div>
         </div>
+        {
+            showAlert&&
+            <Alert
+                title={alert.title}
+                message={alert.message}
+                type={alert.type}
+                hideAlertFunction={()=>{setShowAlert(false)}}
+            />
+        }
         
       </div>
     )
