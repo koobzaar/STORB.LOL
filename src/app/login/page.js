@@ -91,6 +91,9 @@ export default function LoginPage() {
                     <div className="floating-shape" />
                     <div className="floating-shape" />
                     <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
+                    <div className="floating-shape" />
                     <Image src={ireliaBackground} width={3000} className="irelia-image" alt="background" />
                 </div>
             </div>

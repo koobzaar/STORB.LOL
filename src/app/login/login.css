@@ -188,11 +188,20 @@
 
 .floating-shape:nth-child(13) {
     top: 40%;
-    left: 20%;
+    left: 49%;
     animation-delay: 13s;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Faz a forma ser um triângulo */
+}
+.floating-shape:nth-child(14) {
+    top: 10%;
+    left: 45%;
+    animation-delay: 14s;
 }
 
+.floating-shape:nth-child(15) {
+    top: 15%;
+    left: 40%;
+    animation-delay: 15s;
+}
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -202,7 +211,7 @@
         opacity: 1;
     }
     100% {
-        transform: translateY(-50px);
+        transform: translateY(-100px);
         opacity: 0;
     }
 }
