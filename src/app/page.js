@@ -13,16 +13,12 @@ import Gifting from '../components/Gifting/Gifting';
 import Card from '../components/Card/Card';
 import riotPointsIcon from '../../public/icons/rp.svg';
 import { CSSTransition ,TransitionGroup } from 'react-transition-group';
+
+import kindredImage from '../../public/images/kindred.jpg';
 // Styles
 import './home.css';
 
 // Constants
-const user = {
-    name: 'Zerrinha Piroca de Mel',
-    rating: 5,
-    date: '2 days ago',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi. Euismod in pellentesque massa placerat. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Sit amet aliquam id diam maecenas. Sed felis eget velit aliquet sagittis id.'
-}
 
 const Loja = new Store();
 
@@ -66,7 +62,7 @@ export default function Home() {
         const item = filteredItems[rowIndex * numColumns + columnIndex];
         return item ? (
             <div style={style} key={item.id} className='store-content-items-card'>
-                <Card id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
+                <Card id={item.id} name={item.name} imageURL={kindredImage} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
             </div>
         ) : null;
     };
@@ -123,7 +119,7 @@ export default function Home() {
                                     <input type='text'  placeholder='Wanna search of anything in specific?' onChange={handleSearchChange} />
                                 </div>
                                 <div className='store-content-header-riot-points'>
-                                    <Image src={riotPointsIcon} width={20} alt='Riot Points icon'/>
+                                    <Image src={riotPointsIcon} width={20} alt='Riot Points icon' />
                                     <p>{userRiotPoints}</p>
                                 </div>
                             </div>
@@ -160,7 +156,7 @@ export default function Home() {
                             <Gifting 
                                 id={selectedItem.id} 
                                 name={selectedItem.name} 
-                                imageURL={selectedItem.imageURL} 
+                                imageURL={kindredImage} 
                                 price={selectedItem.price} 
                                 tier={selectedItem.tier} 
                                 currentRiotPoints={userRiotPoints}

@@ -1,7 +1,5 @@
 import axios from "axios";
-import tempCatalog from '../data/catalog.json'
-import twitterLogo from "../../public/icons/twitter.svg";
-import discordLogo from "../../public/icons/discord.svg";
+
 import IconChampions from "../../public/icons/helmet.svg";
 import IconSkins from "../../public/icons/paint-palette.svg";
 import IconChromas from "../../public/icons/chromas.svg";

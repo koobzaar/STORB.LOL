@@ -16,7 +16,6 @@ Card.propTypes = {
     name: PropTypes.string.isRequired,
     imageURL: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    tier: PropTypes.oneOf(["ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON"]).isRequired,
 };
 
 /**
@@ -26,12 +25,11 @@ Card.propTypes = {
  * @param {string} props.name - Nome do item
  * @param {string} props.imageURL - URL da imagem do item
  * @param {number} props.price - Preço do item em Riot Points
- * @param {string: "ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON"} props.tier - Tier do item. Se não houver tier - Hextec e etc - espera-se receber o valor "COMMMON".
  * @param {boolean} props.showButton - Se o botão de enviar presente deve ser exibido. Por padrão, é exibido.
  */
-export default function Card({ id, name, imageURL, price, tier, showButton = true , onButtonClick}) {
+export default function Card({ id, name, imageURL, price,showButton = true , onButtonClick}) {
     const handleButtonClick = () => {
-        onButtonClick(id, name, imageURL, price, tier);
+        onButtonClick(id, name, imageURL, price);
     };
     return (
         <div className="card" id={id}>
@@ -39,8 +37,8 @@ export default function Card({ id, name, imageURL, price, tier, showButton = tru
                 <div className='image-container'>
                     <Image priority  className='item-image' src={imageURL} alt={name} width={1254} height={739}/>
                     <div className='wave-container'>
-                        <Image priority className='translucid-wave' src={translucidWave} alt='wave' width={1000} height={100}/>
-                        <Image priority className='solid-wave' src={solidWave} alt='wave' width={1000} height={100}/>
+                        <Image priority layout='responsive' className='translucid-wave' src={translucidWave} alt='wave' width={1000} height={100} />
+                        <Image priority layout='responsive' className='solid-wave' src={solidWave} alt='wave' width={1000} height={100}/>
                     </div>
                 </div>
             </div>
@@ -50,17 +48,6 @@ export default function Card({ id, name, imageURL, price, tier, showButton = tru
                         <h1>Item name</h1>
                         <p>{name}</p>
                     </div>
-                    <div className='item-tier'>
-                        <h1>Tier</h1>
-                        <p>
-                            <svg className="svg-tier" height="10" width="10" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="3" cx="5" cy="6" fill={getFillColor(tier)}/>
-                            </svg>
-                            {capitalizeFirstLetter(tier)}
-                        </p>
-                    </div>
-                </div>
-                <div className='item-price-and-send'>
                     <div className='item-price'>
                         <h1>Riot Points</h1>
                         <p>
@@ -68,10 +55,14 @@ export default function Card({ id, name, imageURL, price, tier, showButton = tru
                             {price}
                         </p>
                     </div>
+                    
+                </div>
+                <div className='item-price-and-send'>
+                   
                     {
                         showButton && (
                             <div className='card-button-container'>
-                                <Button onButtonClick={handleButtonClick} icon={giftIcon} text='Send gift'/>
+                                <Button onButtonClick={handleButtonClick} icon={giftIcon} iconsize={9} text='Send gift'/>
                             </div>
                         )
 

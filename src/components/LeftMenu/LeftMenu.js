@@ -1,7 +1,6 @@
 'use client'
 import React from "react";
 import Image from "next/image";
-import menuItems from "./menuItems";
 
 import twitterLogo from "../../../public/icons/twitter.svg";
 import discordLogo from "../../../public/icons/discord.svg";
@@ -37,7 +36,7 @@ export default function LeftMenu({changeStore, availableCategories, logoutFuncti
                     <h2 className="social-media-call">follow us on social media!</h2>
                     <div className="icons">
                         <Image src={twitterLogo} alt="Twitter Logo" width={30} height={30} />
-                        <Image src={discordLogo} alt="Twitter Logo" width={30} height={30} />
+                        <Image src={discordLogo} className="discord-redirect" alt="Discord logo" width={30} height={30} onClick={() => window.open('https://discord.gg/xCErGgHnbp', '_blank')} />
                     </div>
                 </div>
 

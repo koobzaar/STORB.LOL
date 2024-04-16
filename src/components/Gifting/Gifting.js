@@ -12,13 +12,15 @@ import Alert from '../Alert/Alert'
 import GiftSender from '../../middlewares/Gift';
 import { useCookies } from 'react-cookie';
 import { CSSTransition } from 'react-transition-group';
+import InputMask from 'react-input-mask';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 Gifting.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     imageURL: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    tier: PropTypes.oneOf(["ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON"]).isRequired,
     currentRiotPoints: PropTypes.bool
 };
 
@@ -29,26 +31,42 @@ Gifting.propTypes = {
  * @param {string} props.name - The name of the gift.
  * @param {string} props.imageURL - The URL of the gift image.
  * @param {number} props.price - The price of the gift.
- * @param {string} props.tier - The tier of the gift.
  * @param {number} props.currentRiotPoints - The current Riot Points balance.
  * @param {function} props.hideGifting - The function to hide the gifting component.
  * @returns {JSX.Element} The rendered Gifting component.
  */
-export default function Gifting ({id, name, imageURL, price, tier, currentRiotPoints, hideGifting}) {
-    const [cookies] = useCookies(['user', 'pass']);
+export default function Gifting ({id, name, imageURL, price, currentRiotPoints, hideGifting}) {
+    const [cookies, setCookie] = useCookies(['user', 'pass', 'xKey']);
     const SendGift = new GiftSender(cookies.user, cookies.pass);
     const [alert, setAlert] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
-
+    const [xKey, setXKey] = useState(cookies.xKey || '');
+    const [showPassword, setShowPassword] = useState(false);
+    const [password, setPassword] = useState('');
+  
+    const handlePasswordChange = (event) => {
+      setPassword(event.target.value);
+    };
+  
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
     /**
      * Sets the gift parameters and sends the gift.
      */
+    const handleXKeyChange = (event) => {
+        setXKey(event.target.value);
+    }
+
     const setGiftParameters = () => {
+        
         const receiverInput = document.querySelector('.gifting-card-user-info input');
+        const messageInput = document.querySelector('.gifting-card-user-info textarea');
         const receiver = receiverInput.value;
+        const message = messageInput.value;
+        messageInput.value = '';
         receiverInput.value = '';
 
-        // Validation for receiver
         if (!receiver) {
             setAlert({ title: 'Error!', message: 'You forgot to add a receiver.', type: 'error' });
             setShowAlert(true);
@@ -60,20 +78,29 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
             return;
         }
 
-        const messageInput = document.querySelector('.gifting-card-user-info textarea');
-        const message = messageInput.value;
-        messageInput.value = '';
-
-        // Validation for message
+        if (!xKey) {
+            setAlert({ title: 'Error!', message: 'X-KEY is required.', type: 'error' });
+            setShowAlert(true);
+            return;
+        }
+        if (!/^([A-Z0-9]{4}-){7}[A-Z0-9]{4}$/.test(xKey)) {
+            setAlert({ title: 'Error!', message: 'Invalid X-KEY format.', type: 'error' });
+            setShowAlert(true);
+            return;
+        }
         if (!message) {
             setAlert({ title: 'Error!', message: 'A message is required', type: 'error' });
             setShowAlert(true);
             return;
         }
+
         SendGift.setGiftParameters(id, message, receiver);
-        SendGift.sendGift();
-        setAlert({ title: 'Success!', message: 'Your gift was sent', type: 'success' });
-        setShowAlert(true);
+        SendGift.sendGift().then(() => {
+            // Set xKey as a cookie on successful gift send
+            setCookie('xKey', xKey, { path: '/' });
+            setAlert({ title: 'Success!', message: 'Your gift was sent', type: 'success' });
+            setShowAlert(true);
+        });
     }
 
     return (
@@ -83,13 +110,31 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
                 <h1>Almost there...</h1>
             </div>
             <div className='gifting-card-user'>
-                <div className='gifting-card-user-info'>
+                <div className='gifting-card-user-info' id='username'>
                     <label>
                         Who do you want to gift to?
                     </label>
                     <input className='gifting-send-message-input' placeholder='Summoner#TAG'/>
                     
                 </div>
+                <div className='gifting-card-user-info' id='xkey'>
+            <label>
+                Please enter your X-KEY:
+            </label>
+            <div className='input-x-key'>
+                <InputMask
+                    mask="****-****-****-****-****-****-****-****"
+                    placeholder='AB12-CD34-EF56-GH78-IJ90-KL12-MN34-OP56'
+                    className='gifting-send-message-input'
+                    onChange={handleXKeyChange}
+                    value={xKey}
+                    type={showPassword ? 'text' : 'password'}
+                />
+                <button onClick={togglePasswordVisibility} className='input-x-key-show-password-button'>
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
+            </div>
+        </div>
                 <div className='gifting-card-user-info'>
                     <label>
                         Wanna send any message?
@@ -98,6 +143,7 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
                     <textarea className='gifting-send-message-input' placeholder='Message'/>
                     </div>
                 </div>
+                
             </div>
         </div>
         <div className='gifting-card-item-card'>
@@ -109,7 +155,7 @@ export default function Gifting ({id, name, imageURL, price, tier, currentRiotPo
             </div>
             <div className='gifting-card-item'>
                 <div className='card-container'>
-                    <Card id={id} name={name} imageURL={imageURL} price={price} tier={tier} showButton={false}/>
+                    <Card id={id} name={name} imageURL={imageURL} price={price} showButton={false}/>
                 </div>
                 <div className='gifting-card-balance'>
                     <label>

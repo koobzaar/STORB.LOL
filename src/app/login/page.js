@@ -26,14 +26,22 @@ export default function LoginPage() {
     const [cookies, setCookie] = useCookies(['user', 'pass']);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const handleLogin = (event) => {
         event.preventDefault();
-        if(username === '' || password === '') {
-            alert('Please fill in all fields.');
-            
+        if(username === '') {
+            setUsernameError(true);
+            setTimeout(() => setUsernameError(false), 500);
             return;
         }
+        if(password === '') {
+            setPasswordError(true);
+            setTimeout(() => setPasswordError(false), 500);
+            return;
+        }
+        setPasswordError(false);
         setCookie('user', username, { path: '/' });
         setCookie('pass', password, { path: '/' });
         router.push('/');
@@ -57,12 +65,12 @@ export default function LoginPage() {
                         <div className="login-form-input">
                             <h1 className="sign-in-label">Sign In</h1>
                             <label>Username</label>
-                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <input type="text" className={usernameError ? 'input-error' : ''} value={username} onChange={(e) => setUsername(e.target.value)} />
                             <label>Password</label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input type="password" className={passwordError ? 'input-error' : ''}  value={password} onChange={(e) => setPassword(e.target.value)} />
                             <div className="login-button">
                                 <div className="button-container">
-                                    <Button icon={loginIcon} text={"Login"} type="submit" />
+                                    <Button icon={loginIcon} text={"Login"} type="submit" className="button-login-component" iconsize={15} textsize={"0.88rem"}/>
                                 </div>
                             </div>
                         </div>
@@ -71,8 +79,8 @@ export default function LoginPage() {
                     <div className="login-footer">
                         <h1>Follow us for any future updates!</h1>
                         <div className="footer-icons">
-                            <Image src={twitterIcon} className="footer-icon" width={30} alt="twitter" />
-                            <Image src={dicordIcon} className="footer-icon" width={30} alt="discord" />
+                            <Image src={twitterIcon} className="footer-icon twitter-redirect" width={30} alt="twitter" />
+                            <Image src={dicordIcon} className="footer-icon discord-redirect" width={30} alt="discord" onClick={() => window.open('https://discord.gg/xCErGgHnbp', '_blank')} />
                         </div>
                         <p>PAGAMENTO.LOL isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
                     </div>
