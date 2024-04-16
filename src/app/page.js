@@ -61,7 +61,7 @@ export default function Home() {
         const item = filteredItems[rowIndex * numColumns + columnIndex];
         return item ? (
             <div style={style} key={item.id} className='store-content-items-card'>
-                <Card id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
+                <Card id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} onButtonClick={toggleGifting} showButton={true} />
             </div>
         ) : null;
     };

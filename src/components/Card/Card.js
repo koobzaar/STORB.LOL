@@ -25,7 +25,7 @@ Card.propTypes = {
  * @param {number} props.price - Preço do item em Riot Points
  * @param {boolean} props.showButton - Se o botão de enviar presente deve ser exibido. Por padrão, é exibido.
  */
-export default function Card({ id, name, imageURL, price,showButton = true , onButtonClick}) {
+export default function Card({ id, name, imageURL, price, showButton = true, onButtonClick}) {
     const handleButtonClick = () => {
         onButtonClick(id, name, imageURL, price);
     };

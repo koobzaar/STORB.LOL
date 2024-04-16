@@ -32,7 +32,6 @@ const backendDictionary = [
  * @property {string} name - The name of the item.
  * @property {string} imageURL - The URL of the item's image.
  * @property {number} price - The price of the item.
- * @property {string} tier - The tier of the item. Possible values: "ULTIMATE", "MYTHIC", "PRESTIGE", "LEGENDARY", "EPIC", "COMMON", "LEGACY".
  *
  * Currently, the backend is only returning 'id', 'name', and 'price'. The 'imageURL' and 'tier' properties still need to be implemented.
  *

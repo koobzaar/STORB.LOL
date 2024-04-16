@@ -41,7 +41,6 @@ export default function LoginPage() {
             setTimeout(() => setPasswordError(false), 500);
             return;
         }
-        setPasswordError(false);
         setCookie('user', username, { path: '/' });
         setCookie('pass', password, { path: '/' });
         router.push('/');
