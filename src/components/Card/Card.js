@@ -7,8 +7,6 @@ import solidWave from '../../../public/images/card/wave.svg'
 import translucidWave from '../../../public/images/card/wave-translucid.svg'
 import giftIcon from '../../../public/icons/gift.svg'
 import riotPoints from '../../../public/icons/rp.svg'
-import circle from '../../../public/icons/circle.svg'
-import { getFillColor, capitalizeFirstLetter } from './utils';
 import Button from '../Button/Button'
 
 Card.propTypes = {

@@ -42,11 +42,6 @@ export default function Gifting ({id, name, imageURL, price, currentRiotPoints, 
     const [showAlert, setShowAlert] = useState(false);
     const [xKey, setXKey] = useState(cookies.xKey || '');
     const [showPassword, setShowPassword] = useState(false);
-    const [password, setPassword] = useState('');
-  
-    const handlePasswordChange = (event) => {
-      setPassword(event.target.value);
-    };
   
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);

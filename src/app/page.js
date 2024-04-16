@@ -14,7 +14,6 @@ import Card from '../components/Card/Card';
 import riotPointsIcon from '../../public/icons/rp.svg';
 import { CSSTransition ,TransitionGroup } from 'react-transition-group';
 
-import kindredImage from '../../public/images/kindred.jpg';
 // Styles
 import './home.css';
 
@@ -62,7 +61,7 @@ export default function Home() {
         const item = filteredItems[rowIndex * numColumns + columnIndex];
         return item ? (
             <div style={style} key={item.id} className='store-content-items-card'>
-                <Card id={item.id} name={item.name} imageURL={kindredImage} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
+                <Card id={item.id} name={item.name} imageURL={item.imageURL} price={item.price} tier={item.tier} onButtonClick={toggleGifting} showButton={true} />
             </div>
         ) : null;
     };
@@ -156,7 +155,7 @@ export default function Home() {
                             <Gifting 
                                 id={selectedItem.id} 
                                 name={selectedItem.name} 
-                                imageURL={kindredImage} 
+                                imageURL={selectedItem.imageURL} 
                                 price={selectedItem.price} 
                                 tier={selectedItem.tier} 
                                 currentRiotPoints={userRiotPoints}
