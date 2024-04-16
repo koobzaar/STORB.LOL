@@ -8,7 +8,7 @@ export default function Button ({icon, text, iconsize = 10, onButtonClick, texts
         <div className='button-component'>
             <button className='button-component-clickable' onClick={onButtonClick} >
                 <Image src={icon} className="button-component-icon" alt={"Button icon for "+text} width={iconsize} height={iconsize}/>
-                <span style={{'font-size':textsize}} className='button-component-text'>{text}</span>
+                <span style={{fontSize:textsize}} className='button-component-text'>{text}</span>
             </button>
         </div>
     )
