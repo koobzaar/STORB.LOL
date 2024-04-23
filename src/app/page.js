@@ -39,7 +39,7 @@ export default function Home() {
     useEffect(() => {
         const handleResize = () => {
             const width = window.innerWidth;
-            const columnWidth = 320;
+            const columnWidth = 300;
             const newNumColumns = Math.floor(width / columnWidth);
             setNumColumns(newNumColumns);
         };
